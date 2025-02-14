@@ -6,11 +6,16 @@ import game.Cell;
 import game.GameState;
 import game.Move;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class TicTacToeBoard implements CellBoard {
     String[][] cells = new String[3][3];
+    History history = new History();
 
     public static RuleSet<TicTacToeBoard> getRules() {
         RuleSet rules = new RuleSet();
@@ -62,8 +67,11 @@ public class TicTacToeBoard implements CellBoard {
     }
 
     @Override
-    public void move(Move move) {
+    public Board move(Move move) {
+        history.add(this);
+        TicTacToeBoard board = copy();
         setCell(move.getCell(), move.getPlayer().symbol());
+        return board;
     }
 
     @Override
@@ -102,5 +110,25 @@ public class TicTacToeBoard implements CellBoard {
             result =  new GameState(true, traversal.apply(0));
         }
         return result;
+    }
+}
+
+class History {
+    List<Board> boards = new ArrayList<>();
+
+    public Board getBoardAtMove(int moveIndex) {
+        for(int i=0; i<=boards.size() - (moveIndex + 1); i++){
+            boards.remove(boards.size() - 1);
+        }
+        return boards.get(moveIndex);
+    }
+
+    public Board undo() {
+        boards.remove(boards.size() - 1);
+        return boards.get(boards.size() - 1);
+    }
+
+    public void add(TicTacToeBoard board) {
+        boards.add(board);
     }
 }
