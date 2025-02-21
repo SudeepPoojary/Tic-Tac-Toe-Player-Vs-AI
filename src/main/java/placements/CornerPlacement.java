@@ -14,7 +14,7 @@ public class CornerPlacement implements Placement{
     private CornerPlacement() {
     }
 
-    public synchronized static Placement get(){
+    public synchronized static CornerPlacement get(){
         cornerPlacement = (CornerPlacement) Utils.getIfNull(cornerPlacement, () -> new CornerPlacement());
         return cornerPlacement;
     }

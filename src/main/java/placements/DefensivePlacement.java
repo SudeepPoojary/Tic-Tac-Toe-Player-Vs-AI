@@ -15,7 +15,7 @@ public class DefensivePlacement implements Placement{
 
     }
 
-    public synchronized static Placement get(){
+    public synchronized static DefensivePlacement get(){
         defensivePlacement = (DefensivePlacement) Utils.getIfNull(defensivePlacement, () -> new DefensivePlacement());
         return defensivePlacement;
     }
