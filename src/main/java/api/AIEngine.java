@@ -22,6 +22,8 @@ public class AIEngine {
                 suggestion = getBasicMove(b);
             } else if(countMoves(b) < threshold + 1){
                 suggestion = getCellToPlay(player, b);
+            } else if (player.getTimeUsedInMillis() > 100000) {
+                suggestion = getBasicMove(b);
             } else {
                 suggestion = getOptimalMove(player, b);
             }
@@ -51,10 +53,6 @@ public class AIEngine {
         }
         return null;
     }
-
-
-
-
 
 
     private Cell getCellToPlay(Player player, TicTacToeBoard board) {
@@ -104,10 +102,10 @@ public class AIEngine {
         return null;
     }
 
-    private static Cell getBasicMove(TicTacToeBoard board1) {
+    private static Cell getBasicMove(TicTacToeBoard board) {
         for (int i=0; i<3; i++){
             for (int j=0; j<3; j++){
-                if (board1.getSymbol(i, j) == null) {
+                if (board.getSymbol(i, j) == null) {
                     return new Cell(i, j);
                 }
             }

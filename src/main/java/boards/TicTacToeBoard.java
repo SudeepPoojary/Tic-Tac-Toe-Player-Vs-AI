@@ -7,9 +7,7 @@ import game.GameState;
 import game.Move;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -17,7 +15,7 @@ public class TicTacToeBoard implements CellBoard {
     String[][] cells = new String[3][3];
     History history = new History();
 
-    public static RuleSet<TicTacToeBoard> getRules() {
+    public static RuleSet getRules() {
         RuleSet rules = new RuleSet();
         rules.add(new Rule(board -> outerTraversals((i, j) -> board.getSymbol(i, j))));
         rules.add(new Rule(board -> outerTraversals((i, j) -> board.getSymbol(j, i))));
@@ -67,18 +65,22 @@ public class TicTacToeBoard implements CellBoard {
     }
 
     @Override
-    public Board move(Move move) {
-        history.add(this);
+    public TicTacToeBoard move(Move move) {
+        history.add(new Representation(this));
         TicTacToeBoard board = copy();
         setCell(move.getCell(), move.getPlayer().symbol());
         return board;
     }
+
 
     @Override
     public TicTacToeBoard copy(){
         TicTacToeBoard ticTacToeBoard = new TicTacToeBoard();
         for(int i=0; i<3; i++) {
             System.arraycopy(cells[i], 0, ticTacToeBoard.cells[i], 0, 3);
+        }
+        for (Representation representation : this.history.boards) {
+            ticTacToeBoard.history = history;
         }
         return ticTacToeBoard;
     }
@@ -111,24 +113,46 @@ public class TicTacToeBoard implements CellBoard {
         }
         return result;
     }
+
+    public enum Symbol{
+        X("X"), O("O");
+
+        String marker;
+
+        Symbol(String marker) {
+            this.marker = marker;
+        }
+
+        public String marker() {
+            return marker;
+        }
+    }
 }
 
 class History {
-    List<Board> boards = new ArrayList<>();
+    List<Representation> boards = new ArrayList<>();
 
-    public Board getBoardAtMove(int moveIndex) {
+    public Representation getBoardAtMove(int moveIndex) {
         for(int i=0; i<=boards.size() - (moveIndex + 1); i++){
             boards.remove(boards.size() - 1);
         }
         return boards.get(moveIndex);
     }
 
-    public Board undo() {
+    public Representation undo() {
         boards.remove(boards.size() - 1);
         return boards.get(boards.size() - 1);
     }
 
-    public void add(TicTacToeBoard board) {
-        boards.add(board);
+    public void add(Representation representation) {
+        boards.add(representation);
+    }
+}
+
+class Representation {
+    String representation;
+
+    public Representation(TicTacToeBoard board) {
+        representation = board.toString();
     }
 }

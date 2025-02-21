@@ -15,7 +15,7 @@ public class CenterPlacement implements Placement{
     }
 
 
-    public synchronized static Placement get(){
+    public synchronized static CenterPlacement get(){
         centerPlacement = (CenterPlacement) Utils.getIfNull(centerPlacement, () -> new CenterPlacement());
         return centerPlacement;
     }

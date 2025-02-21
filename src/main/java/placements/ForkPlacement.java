@@ -15,7 +15,7 @@ public class ForkPlacement implements Placement{
     private ForkPlacement() {
     }
 
-    public synchronized static Placement get(){
+    public synchronized static ForkPlacement get(){
         forkPlacement = (ForkPlacement) Utils.getIfNull(forkPlacement, () -> new ForkPlacement());
         return forkPlacement;
     }
