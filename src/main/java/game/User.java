@@ -1,9 +1,13 @@
 package game;
 
+import java.util.concurrent.TimeUnit;
+
 public class User {
     String id;
 
-    public User(String id) {
-        this.id = id;
+    long lastActiveTime;
+
+    public boolean activeAfter(int threshold, TimeUnit timeUnit) {
+        return System.currentTimeMillis() - lastActiveTime > timeUnit.toMillis(threshold);
     }
 }
