@@ -32,7 +32,7 @@ public class RuleEngine {
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
                         if(board.getSymbol(i, j) != null) {
-                            TicTacToeBoard b = ticTacToeBoard.move(new Move(new Cell(i, j), player));
+                            TicTacToeBoard b = ticTacToeBoard.move(new Move(Cell.getCell(i, j), player));
                             // force opponent to make a defensive move
                             // We still win
                             DefensivePlacement defense = DefensivePlacement.get();
@@ -46,7 +46,7 @@ public class RuleEngine {
                                             .isOver(gameState.isOver())
                                             .winner(gameState.getWinner())
                                             .hasFork(true)
-                                            .forkCell(new Cell(i, j))
+                                            .forkCell(Cell.getCell(i, j))
                                             .player(player.flip()).build();
                                 }
                             }
