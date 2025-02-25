@@ -38,7 +38,7 @@ public class Main {
             System.out.println(board);
             row = scanner.nextInt();
             col = scanner.nextInt();
-            Move opponentMove = new Move(new Cell(row, col), human);
+            Move opponentMove = new Move(Cell.getCell(row, col), human);
             gameEngine.move(board, opponentMove);
             System.out.println(board);
             if (!ruleEngine.getState(board).isOver()) {

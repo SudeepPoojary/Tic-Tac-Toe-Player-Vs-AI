@@ -22,7 +22,7 @@ public class GameFactory {
     }
 
     public Game createGame(Integer maxTimePerPlayer) {
-        return new Game(new GameConfig(maxTimePerPlayer, true),
+        return new Game(new GameConfig(null, true),
                 new TicTacToeBoard(),
                 null,
                 0,
@@ -31,7 +31,7 @@ public class GameFactory {
     }
 
     public Game createGame() {
-        return new Game(new GameConfig(null, true),
+        return new Game(new GameConfig(null, false),
                 new TicTacToeBoard(),
                 null,
                 0,

@@ -68,7 +68,7 @@ public class TicTacToeBoard implements CellBoard {
     public TicTacToeBoard move(Move move) {
         history.add(new Representation(this));
         TicTacToeBoard board = copy();
-        setCell(move.getCell(), move.getPlayer().symbol());
+        board.setCell(move.getCell(), move.getPlayer().symbol());
         return board;
     }
 
