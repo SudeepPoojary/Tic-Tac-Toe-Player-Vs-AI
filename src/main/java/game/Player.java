@@ -1,12 +1,15 @@
 package game;
 
+import java.util.concurrent.TimeUnit;
+
 public class Player {
 
-    private User id;
+    private User user;
     private  int timeUsedInMillis;
     private String playerSymbol;
 
     public Player(String playerSymbol) {
+        this.user = new User();
         this.playerSymbol = playerSymbol;
     }
 
@@ -25,4 +28,12 @@ public class Player {
     public int getTimeUsedInMillis() {
         return timeUsedInMillis;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+
+
+
 }
